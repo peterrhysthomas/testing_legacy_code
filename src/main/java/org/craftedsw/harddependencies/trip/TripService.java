@@ -1,20 +1,30 @@
 package org.craftedsw.harddependencies.trip;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.craftedsw.harddependencies.exception.UserNotLoggedInException;
-import org.craftedsw.harddependencies.trip.Trip;
-import org.craftedsw.harddependencies.trip.TripDAO;
 import org.craftedsw.harddependencies.user.User;
 import org.craftedsw.harddependencies.user.UserSession;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TripService {
 
-	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
+    private final TripDAO tripDao;
+    private User loggedUser;
+
+    public TripService() {
+        loggedUser = UserSession.getInstance().getLoggedUser();
+        tripDao = new TripDAO();
+    }
+
+    public TripService(User user, TripDAO tripDao) {
+        this.loggedUser = user;
+        this.tripDao = tripDao;
+    }
+
+    public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
 		List<Trip> tripList = new ArrayList<Trip>();
-		User loggedUser = UserSession.getInstance().getLoggedUser();
-		boolean isFriend = false;
+        boolean isFriend = false;
 		if (loggedUser != null) {
 			for (User friend : user.getFriends()) {
 				if (friend.equals(loggedUser)) {
@@ -23,12 +33,16 @@ public class TripService {
 				}
 			}
 			if (isFriend) {
-				tripList = TripDAO.findTripsByUser(user);
+				tripList = getTrips(user);
 			}
 			return tripList;
 		} else {
 			throw new UserNotLoggedInException();
 		}
 	}
-	
+
+    private List<Trip> getTrips(User user) {
+        return tripDao.findTripsByUser(user);
+    }
+
 }
