@@ -1,4 +1,4 @@
-package org.craftedsw.harddependencies;
+package org.craftedsw.harddependencies.trip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.craftedsw.harddependencies.trip.TripDAO;
 import org.craftedsw.harddependencies.user.User;
 import org.craftedsw.harddependencies.user.UserSession;
 
-public class TripService_Original {
+public class TripService {
 
 	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
 		List<Trip> tripList = new ArrayList<Trip>();
