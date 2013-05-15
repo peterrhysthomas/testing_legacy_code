@@ -7,7 +7,23 @@ public class User {
 
 	private List<User> friends = new ArrayList<User>();
 
-	public List<User> getFriends() {
+    public User(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public User(){
+    }
+
+    public List<User> getFriends() {
 		return friends;
 	}
+
+    public boolean hasFriend(User friend) {
+        for (User myFriend : this.getFriends()) {
+            if (myFriend.equals(friend)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

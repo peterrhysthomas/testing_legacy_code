@@ -26,11 +26,12 @@ public class TripServiceTest {
     @Test(expected = DependendClassCallDuringUnitTestException.class)
     public void cannotCallDaoInTest() throws UserNotLoggedInException {
         final User loggedUser = new User();
-        User friend = mock(User.class);
-        List<User> userList = new ArrayList<User>();
-        userList.add(loggedUser);
-        when(friend.getFriends()).thenReturn(userList);
+        List<User> friendList = new ArrayList<User>();
+        friendList.add(loggedUser);
+        User friend =  new User(friendList);
+
         TripService tripService = new TripService(loggedUser, new TripDAO());
+
         tripService.getTripsByUser(friend);
     }
 
@@ -50,15 +51,17 @@ public class TripServiceTest {
     @Test
     public void userWhoIsAFriendReturnsResults() throws UserNotLoggedInException {
         final User loggedUser = new User();
-        User friend = mock(User.class);
-        List<User> userList = new ArrayList<User>();
-        userList.add(loggedUser);
-        when(friend.getFriends()).thenReturn(userList);
+        List<User> friendList = new ArrayList<User>();
+        friendList.add(loggedUser);
+        User friend =  new User(friendList);
+
         TripDAO dao = mock(TripDAO.class);
         List<Trip> tripList = new ArrayList<Trip>();
         tripList.add(new Trip());
         when(dao.findTripsByUser(friend)).thenReturn(tripList);
+
         TripService tripService = new TripService(loggedUser, dao);
+
         assertTrue(tripService.getTripsByUser(friend).size() == 1);
     }
 
