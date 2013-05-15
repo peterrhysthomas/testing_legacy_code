@@ -21,7 +21,7 @@ public class UserTest {
     }
 
     @Test
-    public void shouldReturnTrueIfUserIsNotFriend(){
+    public void shouldReturnFalseIfUserIsNotFriend(){
         List<User> friends = new ArrayList<User>();
         User notFriend = new User();
         friends.add(new User());

@@ -24,19 +24,13 @@ public class TripService {
 
     public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
 		List<Trip> tripList = new ArrayList<Trip>();
-        boolean isFriend = false;
 		if (loggedUser != null) {
 			if (user.hasFriend(loggedUser)) {
-				tripList = getTrips(user);
+				tripList = tripDao.findTripsByUser(user);
 			}
 			return tripList;
 		} else {
 			throw new UserNotLoggedInException();
 		}
 	}
-
-    private List<Trip> getTrips(User user) {
-        return tripDao.findTripsByUser(user);
-    }
-
 }

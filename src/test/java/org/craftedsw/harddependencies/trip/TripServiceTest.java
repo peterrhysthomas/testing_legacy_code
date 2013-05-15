@@ -9,8 +9,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -44,7 +47,7 @@ public class TripServiceTest {
     @Test
     public void userWhoIsNotAFriendReturnsNoResults() throws UserNotLoggedInException {
         TripService tripService = new TripService(new User(), new TripDAO());
-        assertEquals(tripService.getTripsByUser(new User()).size(), 0);
+        assertThat(tripService.getTripsByUser(new User()), is((empty())));
     }
 
 
@@ -62,7 +65,7 @@ public class TripServiceTest {
 
         TripService tripService = new TripService(loggedUser, dao);
 
-        assertTrue(tripService.getTripsByUser(friend).size() == 1);
+        assertThat(tripService.getTripsByUser(friend), hasSize(1));
     }
 
 
