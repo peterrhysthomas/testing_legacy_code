@@ -1,6 +1,6 @@
 package org.craftedsw.harddependencies.user;
 
-import org.craftedsw.harddependencies.exception.DependendClassCallDuringUnitTestException;
+import org.craftedsw.harddependencies.exception.DependentClassCallDuringUnitTestException;
 
 public class UserSession {
 
@@ -14,7 +14,7 @@ public class UserSession {
 	}
 
 	public User getLoggedUser() {
-		throw new DependendClassCallDuringUnitTestException(
+		throw new DependentClassCallDuringUnitTestException(
 				"UserSession.getLoggedUser() should not be called in an unit test");
 	}
 
